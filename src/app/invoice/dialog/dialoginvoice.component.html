@@ -1,0 +1,54 @@
+<h1 mat-dialog-title>Nuevo Pago</h1>
+
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Cliente</mat-label>
+    <input matInput [(ngModel)]="invoice.CliId">
+  </mat-form-field>
+
+  <form [formGroup]="detailForm" (ngSubmit)="addDetails()">
+    <mat-form-field>
+      <mat-label>Plan</mat-label>
+      <input type="text" formControlName="PlanId" matInput placeholder="Plan">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Gestion</mat-label>
+      <!--input type="text" formControlName="Year" matInput placeholder="Gestion"-->
+      <mat-select formControlName="Year">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let gest of years" [value]="gest">{{gest.Gestion}}</mat-option>
+      </mat-select>
+
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Mes</mat-label>
+      <mat-select formControlName="Month">
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let month of months" [value]="month">{{month.Name}}</mat-option>
+      </mat-select>
+      <!--input type="text" formControlName="Month" matInput placeholder="Mes"-->
+    </mat-form-field>
+    <div>
+      <button type="submit" [disabled]="!detailForm.valid" mat-raised-button>+</button>
+    </div>
+  </form>
+  <div>
+    <h5>Details</h5>
+    <table style="width:100%">
+      <tr>
+        <th>Plan</th>
+        <th>Gestion</th>
+        <th>Mes</th>
+      </tr>
+      <tr *ngFor="let item of details">
+        <td>{{item.PlanId}}</td>
+        <td>{{item.Year}}</td>
+        <td>{{item.Month}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addInvoice()">Save</button>
+</div>
